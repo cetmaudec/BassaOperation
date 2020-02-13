@@ -1,0 +1,278 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no scrollbar">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Dashboard General</title>
+  <!-- Bootstrap core JavaScript-->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
+  <script src="../assets/vendor/chart.js/Chart.min.js"></script>
+</head>
+
+<body>
+  <div class="page">
+    <app-navbar></app-navbar>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div class="content">
+          <section class="section section-container" style="padding-bottom: 15px;">
+            <div class="box">
+            <h1>Nueva Orden de Trabajo</h1>
+            <div class="row">
+              <div class="col">
+                <form [formGroup]="OTform" >
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-1-sm">
+                          <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/boss.svg"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                        <div class="col-10">
+                        <label>Cliente</label>
+                          <div class="control">
+                            <div class="row">
+                              <div class="col-12" *ngIf="!estadoCliente">
+                                 <select class="form-control"  formControlName="nombreCliente" >
+                                    <option *ngFor="let cliente of cliente$.data" value="{{cliente.idCliente}}">{{cliente.nombre_empresa}}</option>
+                                  </select>
+                              </div>
+                               <div class="col-12" *ngIf="estadoCliente">
+                                 <select class="form-control" disabled formControlName="nombreCliente" >
+                                    <option *ngFor="let cliente of cliente$.data" value=null></option>
+                                  </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-1-sm">
+                          <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/work_c.svg"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                        <div class="col-10">
+                           <label>Tipo de trabajo(*)</label>
+                          <select class="form-control" required formControlName="tipo">
+                            <option *ngFor="let tipo of tipo$.data" value="{{tipo.nombre_tipo}}">{{tipo.nombre_tipo}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-1-sm">
+                          <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/edit_2.svg"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                        <div class="col-10">
+                           <label>Descripción</label>
+                           <br>
+                           <textarea class="input" clearInput  type="textarea" maxlength="240" rows="5" cols="75" formControlName="descripcion">
+                              </textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-1-sm">
+                          <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/money.svg"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                        <div class="col-6">
+                           <label>Tipo de Pago(*)</label>
+                          <select class="form-control" required formControlName="forma_pago">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Crédito">Crédito</option>
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Cheque">Cheque</option>
+                          </select>
+                        </div>
+                        <div class="col-4">
+                           <label>Monto a cobrar(*)</label>
+                            <input class="input" type="number"  formControlName="monto_cobrado" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-1-sm">
+                          <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/calendar_c.png"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                        <div class="col-10">
+                          <div class="row">
+                            <div class="col-5">
+                              <label>Fecha de Ingreso(*)</label>
+                              <div class="control">
+                                <input class="input" type="date"  formControlName="fecha_ingreso" required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-3" style="padding-top: 4%">
+                  <div class="row">
+                    <button class="btn btn-warning" style="width:140px;" (click)="AddClient()">Nuevo Cliente</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf = "estadoCliente && OTform.valid">
+                <div class="box" style="color: #FF0022; 	border: 0px solid #FF0022 !important;">
+                  <h1>Datos de Clientes</h1>
+                  <form [formGroup]="Clienteform">
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-9">
+                          <label><b>Empresa</b></label>
+                          <div class="row">
+                            <div class="col-1-sm">
+                              <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/work.svg"  width="72" class="d-inline-block align-center" alt="">
+                            </div>
+                            <div class="col-6">
+                              <label style="font-size: 14px;">Nombre Empresa (*)</label>
+                              <div class="control">
+                                <input class="input" type="text" style="width: 100%;" placeholder="Nombre Empresa"  formControlName="nombre_empresa">
+                              </div>
+                            </div>
+                            <div class="col-4">
+                              <label style="font-size: 14px;">RUT Empresa (*)</label>
+                              <div class="control">
+                                <input class="input" type="text" placeholder="XX.XXX.XXX-X"       formControlName="rut_empresa">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-9">
+                          <label><b>Representante</b></label>
+                          <div class="row">
+                            <div class="col-1-sm">
+                              <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/boss.svg"  width="72" class="d-inline-block align-center" alt="">
+                            </div>
+                            <div class="col-10">
+                              <label>Nombre Representante (*)</label>
+                              <div class="control">
+                                <div class="row">
+                                  <div class="col-4">
+                                    <input class="input" type="text" style="width: 100%;" placeholder="Nombre"  formControlName="nombre">
+                                  </div>
+                                  <div class="col-4">
+                                    <input class="input" type="text" style="width: 100%;" placeholder="Apellido Paterno"  formControlName="apellidoPat">
+                                  </div>
+                                  <div class ="col-4">
+                                    <input class="input" type="text" style="width: 100%;" placeholder="Apallido Materno"  formControlName="apellidoMat">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6" style="margin-left: 8%;">
+                              <label style="font-size: 14px;">RUT Empresa (*)</label>
+                              <div class="control">
+                                <input class="input" type="text" placeholder="XX.XXX.XXX-X"       formControlName="rut">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+              			<div class="field">
+              				<div class="row">
+              					<div class="col-1-sm">
+              						<img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/email_c.svg"  width="72" class="d-inline-block align-center" alt="">
+              					</div>
+              					<div class="col-9">
+              						<label>Correo electrónico de contacto (*)</label>
+              						<div class="control">
+              							<input class="input" type="email" placeholder="ejemplo@ejemplo.com"  formControlName="correo">
+              						</div>
+              					</div>
+              				</div>
+              			</div>
+              			<div class="field">
+              				<div class="row">
+              					<div class="col-9">
+              						<label><b>Dirección</b></label>
+              						 <div class="row">
+                            <div class="col-1-sm">
+                              <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/house_c.svg"  width="72" class="d-inline-block align-center" alt="">
+                            </div>
+                            <div class="col-6">
+                              <label style="font-size: 14px;">Calle</label>
+                              <div class="control">
+                                 <input class="input" type="text" style="width: 100%;" placeholder="Calle/Población/Villa"  formControlName="Dir_calle">
+                               </div>
+                             </div>
+                             <div class="col-3">
+                               <label style="font-size: 14px;">Número</label>
+                               <div class="control">
+                                 <input class="input" type="text" placeholder="#"  formControlName="Dir_numero">
+                               </div>
+                             </div>
+                           </div>
+                           <div class="row">
+                             <div class="col-6" style="margin-left: 8%;">
+                               <label style="font-size: 14px;">Comuna (*)</label>
+                               <div class="control">
+                                 <input class="input" type="text" placeholder="Comuna"  formControlName="Dir_comuna">
+                               </div>
+                             </div>
+                          </div>
+                        </div>
+                      </div>
+              			</div>
+                    <div class="field">
+                      <div class="row">
+                        <div class="col-9">
+                          <label><b>Teléfono</b></label>
+                          <div class="row">
+                            <div class="col-1-sm">
+                              <img style="padding:10px; padding-left: 20px" src="../assets/icons/svg/phone_c.svg"  width="72" class="d-inline-block align-center" alt="">
+                            </div>
+                            <div class="col-4">
+                              <label style="font-size: 14px;">Teléfono fijo</label>
+                              <div class="control">
+                                <input class="input" type="text" placeholder="(xx) xxx xxx xxx"  formControlName="Telefono">
+                              </div>
+                            </div>
+                            <div class="col-4">
+                              <label style="font-size: 14px;">Celular (*)</label>
+                              <div class="control">
+                                <input class="input" type="text" placeholder="(+569) xxx xxx xxx"  formControlName="Celular">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+              	</div>
+              </div>
+              
+              <div class="col-12" *ngIf="!estadoCliente && !OTform.valid" style="padding-top: 5%; padding-left: 60%; padding-bottom:5%;">
+                <button type="button" (click)="SubmitOTCliente()" disabled style="align-content: right" class="btn btn-success">Guardar</button>
+              </div>
+              <div class="col-12" *ngIf="!estadoCliente && OTform.valid" style="padding-top: 5%; padding-left: 60%; padding-bottom:5%;">
+                <button type="button" (click)="SubmitOTCliente()" style="align-content: right" class="btn btn-success">Guardar</button>
+              </div>
+              <div class="col-12" *ngIf="estadoCliente && Clienteform.valid" style="padding-top: 5%; padding-left: 60%; padding-bottom:5%;">
+                <button type="button" (click)="SubmitCliente()"  style="align-content: right" class="btn btn-success">Guardar</button>
+              </div>
+              <div class="col-12" *ngIf="estadoCliente && !Clienteform.valid" style="padding-top: 5%; padding-left: 60%; padding-bottom:5%;">
+                <button type="button" disabled (click)="SubmitCliente()"  style="align-content: right" class="btn btn-success">Guardar</button>
+              </div>
+           </div>
+         </section>
+       </div>
+     </div>
+   </div>
+ </body>

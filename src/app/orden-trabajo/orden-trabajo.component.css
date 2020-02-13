@@ -1,0 +1,58 @@
+body, html {
+  	height: auto;
+}
+
+.page{
+  	background-image: url("src/assets/img/bg3.jpg");
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	min-width: 100%;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.field{
+  padding-left: 5%;
+  margin-bottom: 2%;
+}
+.content{
+  padding-top: 3%;
+  position: relative;
+  left:20%;
+  width: 65%;
+}
+img{
+  align-self: center;
+}
+.box{
+	border: 1px solid #34495e !important;
+	background-color: #f8f9f9;
+  width: 100%;
+  height: 100%;
+}
+
+h1{
+	color: #4C4C4E;
+	text-decoration: bold;
+	font-family: Monaco;
+	text-align: center;
+	font-weight: bold;
+   margin: 2% auto 2% auto;
+}
+
+h2{
+  color: #4C4C4E;
+  text-decoration: bold;
+  font-family: Monaco;
+  text-align: center;
+  font-weight: bold;
+  margin: 2% auto 2% auto;
+}
+
+
+label{
+	color: #d96421;
+	font-family: Monaco;
+}

@@ -1,0 +1,99 @@
+body, html {
+    height: 100%;
+}
+
+.page{
+    background-image: url("src/assets/img/bg3.jpg");
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+section{
+  position: center;
+}
+
+img{
+  vertical-align: middle;
+  display: flex;
+  align-self: center;
+}
+/*img{
+  padding: 5%;
+  margin-top: 20%;
+  margin-bottom: 20%;
+  margin-left: 190%;
+  margin: 20% auto 20% auto;
+}*/
+
+.content{
+  padding-top: 3%;
+  position: fixed;
+  left:auto;
+  width: 65%;
+  display: grid;
+  align-self: center;
+}
+
+.box{
+  border: 1px solid #34495e !important;
+  background-color: #f8f9f9;
+  width: auto;
+}
+
+h1{
+  color: #4C4C4E;
+  text-decoration: bold;
+  font-family: Monaco;
+  text-align: center;
+  font-weight: bold;
+}
+
+h2{
+  color: #4C4C4E;
+  text-decoration: bold;
+  font-family: Monaco;
+  text-align: center;
+  font-weight: bold;
+  margin: 2% auto 2% auto;
+}
+
+label{
+  color: #d96421;
+  font-family: Monaco;
+}
+
+table{
+  width: auto !important;
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+}
+
+thead{
+  background-color: #4f667c;
+  color: #f4f4f4;
+  text-align: center;
+  border-radius: 20px
+
+}
+
+th{
+  background-color: #4f667c;
+  font-family: Monaco;
+  text-align: center;
+  color: #f4f4f4;
+}
+
+td{
+  font-family: Monaco;
+  text-align: center;
+}

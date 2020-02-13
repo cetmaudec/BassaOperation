@@ -1,0 +1,62 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Dashboard General</title>
+  <!-- Bootstrap core JavaScript-->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
+  <script src="../assets/vendor/chart.js/Chart.min.js"></script>
+</head>
+
+<body>
+  <div class="page">
+    <app-navbar></app-navbar>
+
+    <div class="row" style="margin-bottom: 80px;">
+      <div class="col"></div>
+      <div class="col-8" style="padding-left:5%; padding-top:2.5%;">
+        <div class="card">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Ordenes de trabajo:</h6>
+            </div>
+            <div class="card-body" *ngFor="let ot of ordenTrabajoAct$; let i=index">
+              <h4 class="small font-weight-bold">OT{{ot.ordenTrabajo}}: {{ot.nombre}} {{ot.apellido_p}} {{ot.apellido_m}}
+                <span class="float-right">{{otPorc[i].porcentaje}}%</span>
+              </h4>
+              <div class="progress">
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >0" role="progressbar" style="width:1%; background-color:#da4f4a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >5" role="progressbar" style="width:5%; background-color:#da4f4a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >10" role="progressbar" style="width:5%; background-color:#e66f4b;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >15" role="progressbar" style="width:5%; background-color:#e66f4b;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >20" role="progressbar" style="width:5%; background-color:#f08e52;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >25" role="progressbar" style="width:5%; background-color:#f08e52;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >30" role="progressbar" style="width:5%; background-color:#f6ac5e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >35" role="progressbar" style="width:5%; background-color:#f6ac5e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >40" role="progressbar" style="width:5%; background-color:#fbc971;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >45" role="progressbar" style="width:5%; background-color:#fbc971;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >50" role="progressbar" style="width:5%; background-color:#ffe68a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >55" role="progressbar" style="width:5%; background-color:#e2dd7a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >60" role="progressbar" style="width:5%; background-color:#e2dd7a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >65" role="progressbar" style="width:5%; background-color:#c4d46d;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >70" role="progressbar" style="width:5%; background-color:#c4d46d;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >75" role="progressbar" style="width:5%; background-color:#a4cb64;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >80" role="progressbar" style="width:5%; background-color:#a4cb64;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >85" role="progressbar" style="width:5%; background-color:#82c15e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >90" role="progressbar" style="width:5%; background-color:#82c15e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >95" role="progressbar" style="width:5%; background-color:#5ab75c;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >98" role="progressbar" style="width:4%; background-color:#5ab75c;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,40 @@
+<div class="header">
+	<div class="top">
+		<b>Hola {{User}} !</b>
+		<input type="image" (click)="logOut()" src="../assets/icons/svg/next.svg" width="40" />
+	</div>
+	<nav>
+		<a routerLink="/home" style="color:white">
+			<img  src="./assets/icons/svg/home.svg" style="width:50px;">
+			<br>
+			Inicio
+		</a>
+	    <a routerLink="/cliente">
+	    	<img  src="./assets/icons/svg/group.svg" style="width:50px;">
+	    	<br>
+	    	Clientes
+	    </a>
+	    <a routerLink="/ordentrabajo">
+	    	<img   src="./assets/icons/svg/settings.svg" style="width:50px;">
+	    	<br>
+	    	Orden de Trabajo
+	    </a>
+	    <a routerLink="/proveedor">
+	    	<img   src="./assets/icons/svg/portfolio.svg" style="width:50px;">
+	    	<br>
+	    	Proveedores
+	    </a>
+	    <a routerLink="/maquinaria">
+	    	<img  src="./assets/icons/svg/gear.svg" style="width:50px;">
+	    	<br>
+	    	Maquinaria
+	    </a>
+
+	    <a routerLink="/estadistico">
+	    	<img  src="./assets/icons/svg/stats.svg" style="width:50px;">
+	    	<br>
+		    Análisis estadístico
+		</a>	
+		<div class="animation start-home"></div>
+	</nav>
+</div>
