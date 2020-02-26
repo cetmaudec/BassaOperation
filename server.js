@@ -416,6 +416,63 @@ app.post('/tipo/insert', bodyParser.json(), (req, res, next) => {
 })
 
 /*
+TIPO MAQUINA
+*/
+app.get('/tipo/maquina/select', (req, res) => {
+  con.query('SELECT * FROM tipoMaquina;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+
+
+
+/*
+MAQUINA
+*/
+app.get('/maquina/select' , (req, res, next) => {
+    con.query(`SELECT * FROM maquina`, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.get('/maquina/select/:id' , (req, res, next) => {
+    con.query(`SELECT * FROM maquina WHERE idMaq=${req.params.id}`, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+
+app.post('/maquina/insert', bodyParser.json(), (req, res, next) => {
+    const INSERT_MAQ = `INSERT INTO maquina(identificacion, marca, modelo, tipo) VALUES('${req.body.identificacion}','${req.body.marca}','${req.body.modelo}','${req.body.tipo}');`
+    con.query(INSERT_MAQ, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.send('maquina adicionado con exito')
+        }
+    })
+})
+
+/*
 RELACIÓN MAQUINA- OT
 */
 
@@ -431,6 +488,43 @@ app.get('/maquina/ot/select/:id' , (req, res, next) => {
         }
     })
 })
+
+app.get('/ot/maquina/select/:id' , (req, res, next) => {
+    con.query(`SELECT * FROM OT_Maq, orden_trabajo WHERE OT_Maq.maquina = ${req.params.id} AND OT_Maq.ordenTrabajo = orden_trabajo.idOT`, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.get('/ot/maquina/sum/time/:id' , (req, res, next) => {
+    con.query(`SELECT SUM(tiempo_uso)/60 as suma FROM OT_Maq, orden_trabajo WHERE OT_Maq.ordenTrabajo = orden_trabajo.idOT AND maquina = ${req.params.id};`, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.post('/maquina/ot/insert', bodyParser.json(), (req, res, next) => {
+    const INSERT_MAQ_OT_QUERY = `INSERT INTO OT_Maq(ordenTrabajo, maquina, tiempo_uso) VALUES(${req.body.OT},${req.body.maquina},${req.body.tiempo});`
+    con.query(INSERT_MAQ_OT_QUERY, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.send('tipo adicionado con exito')
+        }
+    })
+})
+
+
 
 app.listen(426, () => {
     console.log('el servidor está usando el puerto 426 -')

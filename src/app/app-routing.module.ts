@@ -18,6 +18,10 @@ import { FichaComponent } from './ficha/ficha.component';
 import { FichaIndComponent } from './ficha-ind/ficha-ind.component';
 import { ClienteDetalleComponent } from './cliente-detalle/cliente-detalle.component';
 import { OrdenTrabajoComponent } from './orden-trabajo/orden-trabajo.component';
+import { ProveedorDetalleComponent } from './proveedor-detalle/proveedor-detalle.component';
+import { MaquinariaDetalleComponent } from './maquinaria-detalle/maquinaria-detalle.component';
+import { AddMaquinariaComponent } from './add-maquinaria/add-maquinaria.component';
+
 
 
 const routes: Routes = [
@@ -29,9 +33,11 @@ const routes: Routes = [
   {	path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {	path: 'cliente', component: ClientesComponent, canActivate: [AuthGuard] },
   {	path: 'cliente/:id', component: ClienteDetalleComponent, canActivate: [AuthGuard] },
-  {	path: 'proveedor', component: ProveedoresComponent, canActivate: [AuthGuard] },
-  {	path: 'proveedor/:id', component: ProveedoresComponent, canActivate: [AuthGuard] },
+  //{	path: 'proveedor', component: ProveedoresComponent, canActivate: [AuthGuard] },
+  //{	path: 'proveedor/:id', component: ProveedorDetalleComponent, canActivate: [AuthGuard] },
   {	path: 'maquinaria', component: MaquinariaComponent, canActivate: [AuthGuard] },
+  { path: 'maquinaria/:id', component: MaquinariaDetalleComponent , canActivate: [AuthGuard] },
+  { path: 'maquinaria/nueva/:id', component: AddMaquinariaComponent , canActivate: [AuthGuard] },
   {	path: 'estadistico', component: EstadisticoComponent, canActivate: [AuthGuard] },
   { path: 'ordentrabajo', component: FichaComponent, canActivate: [AuthGuard] },
   { path: 'ordentrabajo/:id', component: FichaIndComponent, canActivate: [AuthGuard] },

@@ -81,7 +81,7 @@
                   </div>
                 </div>
                 <br>
-                <div class="row" *ngIf="ot.estado == 'Finalizado' || ot.estado == 'No iniciado'">
+                <!--<div class="row" *ngIf="ot.estado == 'Finalizado' || ot.estado == 'No iniciado'">
                   <button type="button"  style="width:150px" class="btn btn-success" disabled (click)="Finalizado()">Entregado</button>
                 </div>
                 <div class="row" *ngIf="ot.estado == 'En ejecución'">
@@ -90,39 +90,65 @@
                 <br>
                 <div class="row">
                   <button type="button"  style="width:150px" class="btn btn-warning" (click)="generateReport()">Generar Reporte</button>
-                </div>
+                </div>-->
               </div>
             </div>
 
             <div class="row">
-              <div class="col-10" style="color:#4C4C4E; padding-left: 10%;">
+              <div class="col-12" style="color:#4C4C4E; padding-left: 10%;">
                 <br>
                 <div class="table-responsive">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th class="col-1 text-center">#</th>
-                        <th class="col-4 text-center">Maquina</th>
+                        <th class="col-5 text-center">Maquina</th>
                         <th class="col-2 text-center">Tiempo de uso</th>
-                        <th class="col-3 text-center"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let act of dataOTMaq$.data">
-                        <th class="text-center" scope="row">{{i}}</th>
+                      <tr *ngFor="let act of dataOTMaq$.data; index as i">
+                        <th class="text-center" scope="row">{{i+1}}</th>
                         <td class="text-center">{{act.marca}}, {{act.modelo}}</td>
-                        <td class="text-center">{{act.tiempo_uso}}</td>
-                        <td class="text-center"></td>
+                        <td class="text-center">{{act.tiempo_uso}} minutos</td>
                       </tr>
                     </tbody>
-                    <button (click)="AddMaq()" class="btn btn-light">
-                      <img  src="../assets/icons/svg/plus.svg"  width="50">
-                    </button>
                   </table>
                 </div>
               </div>
             </div>
-          </div>
+            <div class="row">
+              <div class="col-12" style="color:#4C4C4E; padding-left: 13%;">
+                <div *ngIf="addmaq">
+                  <form [formGroup]="MaqAddform">
+                    <div class="row" style="color:#4C4C4E; padding-left: 10%;">
+                      <div class="col-5">
+                        <label>Máquina</label><br>
+                        <select class="form-control"  formControlName="maquina" >
+                          <option *ngFor="let maq of Maq$.data" value="{{maq.idMaq}}">{{maq.marca}}, {{maq.modelo}}</option>
+                        </select>
+                      </div>
+                      <div class="col-5">
+                        <label>Tiempo de uso</label><br>  
+                        <input class="input" clearInput style="width: 60%;" type="number"  step="0.1" formControlName="tiempo">  minutos
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-8">
+                      </div>
+                       <div class="col-2">
+                        <br>
+                        <button class="btn btn-success" style="width: 80%;" [disabled]="!MaqAddform.valid" (click)="onSubmitAddMaq()">Agregar</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <button (click)="AddMaq()" class="btn btn-light">
+                  <img  src="../assets/icons/svg/plus.svg"  width="50">
+                </button>
+              </div> 
+            </div>
+          </div><
         </section>
       </div>
     </div>

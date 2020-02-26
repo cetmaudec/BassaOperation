@@ -32,6 +32,9 @@ import { FichaComponent } from './ficha/ficha.component';
 import { FichaIndComponent } from './ficha-ind/ficha-ind.component';
 import { ClienteDetalleComponent } from './cliente-detalle/cliente-detalle.component';
 import { OrdenTrabajoComponent } from './orden-trabajo/orden-trabajo.component';
+import { ProveedorDetalleComponent } from './proveedor-detalle/proveedor-detalle.component';
+import { MaquinariaDetalleComponent } from './maquinaria-detalle/maquinaria-detalle.component';
+import { AddMaquinariaComponent } from './add-maquinaria/add-maquinaria.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -56,6 +59,9 @@ export function tokenGetter() {
     FichaIndComponent,
     ClienteDetalleComponent,
     OrdenTrabajoComponent,
+    ProveedorDetalleComponent,
+    MaquinariaDetalleComponent,
+    AddMaquinariaComponent,
   ],
   imports: [
     BrowserModule,

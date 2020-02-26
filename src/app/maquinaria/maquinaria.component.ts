@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import { Chart } from 'chart.js';
-
+import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
 import 'chartjs-plugin-colorschemes';
+import Swal from'sweetalert2';
 
 
 @Component({
@@ -13,24 +15,82 @@ import 'chartjs-plugin-colorschemes';
 })
 export class MaquinariaComponent implements OnInit {
 
-    maquinaria$: any = [];
+  Maq$: any = [];
+  Tipo$: any = [];
+
 	p: number = 1;
+  addmaq:Boolean = false;
+  MaqAddform: FormGroup;
 
-	constructor(private http: HttpClient) { }
+  data={
+    identificacion:'',
+    marca:'',
+    modelo:'',
+    tipo:''
+  };
 
-	ngOnInit() {
-		this.getMaquinarias();
+	constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) { }
+
+	async ngOnInit() {
+    this.MaqAddform = this.formBuilder.group({
+      identificacion:[''],
+      marca:['', Validators.required],
+      modelo:['', Validators.required],
+      tipo:['', Validators.required],
+    });
+		this.Maq$ = await this.getMaquina();
+    this.Tipo$ = await this.getTipo();
 	}
 
+  async getMaquina(){
+    this.http.get('http://localhost:426/maquina/select').subscribe(
+      (resp) => {
+        this.Maq$ = resp as []
+      });
+  	return this.Maq$;
+  }
 
-	getMaquinarias(){
-		this.maquinaria$ = [{idMaq:1, identificacion:'Cepilladora1', tipo:'cepilladora', modelo:'X01'},
-							{idMaq:2, identificacion:'Fresadora1', tipo:'fresadora', modelo:'X02'},
-							{idMaq:3, identificacion:'Fresadora2', tipo:'fresadora', modelo:'X03'},
-							{idMaq:4, identificacion:'Cortadora', tipo:'cortadora', modelo:'X04'},
-							{idMaq:5, identificacion:'Torno', tipo:'torno', modelo:'X05'},
-							{idMaq:6, identificacion:'Soldadora1', tipo:'soldadora', modelo:'X06'},
-							{idMaq:7, identificacion:'Soldadora2', tipo:'soldadora', modelo:'X07'}]
+  async getTipo(){
+    this.http.get('http://localhost:426/tipo/maquina/select').subscribe(
+      (resp) => {
+        this.Tipo$ = resp as []
+      });
+    return this.Tipo$;
+  }
+
+	gotoDetails(MaqId: any) {
+		this.router.navigate(['/maquinaria/', MaqId]);
 	}
 
+  NuevaMaq(){
+    this.addmaq=true;
+  }
+
+  SubmitAddMaq(){
+    this.data = {
+      'identificacion':this.MaqAddform.get('identificacion').value,
+      'marca':this.MaqAddform.get('marca').value,
+      'modelo':this.MaqAddform.get('modelo').value,
+      'tipo':this.MaqAddform.get('tipo').value
+    };
+
+    this.http.post('http://localhost:426/maquina/insert', this.data, {responseType: 'text'}).subscribe(
+      response =>  Swal.fire({
+                icon: 'success',
+                title: 'Nueva Máquina!',
+                text: 'La nueva maquina ha sido creada exitosamente.',
+                confirmButtonText: 'Ok!'
+                }).then((result) => {
+                  if (result.value) {
+                    this.addmaq=false;
+                    this.router.navigate(['/maquinaria']);
+                  }
+                }) ,
+        err => Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Ha ocurrido un error, vuelva a intentarlo'
+          })
+    );
+  }
 }

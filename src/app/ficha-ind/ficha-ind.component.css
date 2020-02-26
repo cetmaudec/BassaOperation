@@ -4,14 +4,12 @@ body, html {
 
 .page{
     background-image: url("src/assets/img/bg3.jpg");
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    /* Preserve aspet ratio */
     min-width: 100%;
     min-height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-size: cover;
 }
 
@@ -27,7 +25,7 @@ img{
 
 .content{
   padding-top: 3%;
-  position: fixed;
+  position: relative;
   left:auto;
   width: 65%;
   display: grid;
@@ -75,7 +73,6 @@ thead{
   color: #f4f4f4;
   text-align: center;
   border-radius: 20px
-
 }
 
 th{

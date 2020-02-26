@@ -22,6 +22,7 @@ export class OrdenTrabajoComponent implements OnInit {
   cliente$: any = [];
   tipo$: any = [];
   LastOT$: any = [];
+  pagado_inicio:any = 0;
 
   prueba:any;
 
@@ -47,7 +48,7 @@ export class OrdenTrabajoComponent implements OnInit {
     fecha_ingreso:'',
     forma_pago:'',
     monto_cobrado:'',
-    pagado: false,
+    pagado: '',
     estado:''
   }
 
@@ -60,6 +61,7 @@ export class OrdenTrabajoComponent implements OnInit {
       forma_pago:['', Validators.required],
       monto_cobrado:['', Validators.required],
     });
+
     this.Clienteform = this.formBuilder.group({
       nombre_empresa:['', Validators.required],
       rut_empresa:['', Validators.required],
@@ -115,7 +117,7 @@ export class OrdenTrabajoComponent implements OnInit {
         'fecha_ingreso':this.OTform.get('fecha_ingreso').value,
         'forma_pago':this.OTform.get('forma_pago').value,
         'monto_cobrado': this.OTform.get('monto_cobrado').value,
-        'pagado': 0,
+        'pagado': this.pagado_inicio,
         'estado': 'No iniciado'
       };
     }else{
@@ -126,7 +128,7 @@ export class OrdenTrabajoComponent implements OnInit {
         'fecha_ingreso':this.OTform.get('fecha_ingreso').value,
         'forma_pago':this.OTform.get('forma_pago').value,
         'monto_cobrado': this.OTform.get('monto_cobrado').value,
-        'pagado': 0,
+        'pagado': this.pagado_inicio,
         'estado': 'No iniciado'
       };
     }

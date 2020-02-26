@@ -4,7 +4,7 @@ body, html {
 
 .page{
     background-image: url("src/assets/img/bg3.jpg");
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     /* Preserve aspet ratio */
@@ -36,7 +36,7 @@ img{
 
 .content{
   padding-top: 3%;
-  position: fixed;
+  position: relative;
   left:auto;
   width: 65%;
   display: grid;

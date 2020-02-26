@@ -28,14 +28,57 @@
                   <h2>Maquinaria</h2>
                 </div>
               <div class="col">
-                <button class="btn btn-light" type="button" name="button" (click)="GenerarOT()" style="height:100px;">
+                <button class="btn btn-light" type="button" name="button" (click)="NuevaMaq()" style="height:100px;">
                   <img class="d-inline-block align-center" src="../assets/icons/svg/plus.svg"  width="72" alt="">
                   <br>
                   <h6>Agregar nueva</h6>
                 </button>
               </div>
             </div>
-    					<table class="table table-bordered">
+
+            <div class="row">
+              <div class="col-12" style="color:#4C4C4E; padding-left: 13%;">
+                <div *ngIf="addmaq">
+                  <form [formGroup]="MaqAddform">
+                    <div class="row" style="color:#4C4C4E; padding-left: 10%;">
+                      <div class="col-10">
+                        <label><b>Identificación</b></label><br>
+                        <input class="input" clearInput style="width: 60%;" type="text"  formControlName="identificacion">
+                      </div>
+                    </div>
+                    <div class="row" style="color:#4C4C4E; padding-left: 10%;">
+                      <div class="col-10">
+                        <label><b>Tipo</b></label><br>
+                        <select class="form-control" style="width: 70%;" formControlName="tipo">
+                          <option *ngFor="let tp of Tipo$.data" value="{{tp.nombre_tipo}}">{{tp.nombre_tipo}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row" style="color:#4C4C4E; padding-left: 10%;">
+                      <div class="col-10">
+                        <label><b>Máquina</b></label><br>
+                        <div class="row">
+                          <div class="col-5">
+                            <label>Marca</label><br>
+                            <input class="input" clearInput style="width: 60%;" type="text"  formControlName="marca">
+                          </div>
+                          <div class="col-5">
+                            <label>Modelo</label><br> 
+                            <input class="input" clearInput style="width: 60%;" type="text"  formControlName="modelo">  
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-5" style="padding-left: 80%; padding-bottom: 3%; padding-top: 2%;">
+                      <button type="button" (click)="SubmitAddMaq()" [disabled]="!MaqAddform.valid" class="btn btn-success">Guardar
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div> 
+            </div>
+
+ 					<table class="table table-bordered">
                 			<thead>
                 		  		<tr>
                 		  		  <th class="col-1" >#</th>
@@ -47,13 +90,13 @@
                 			</thead>
                 	
                 			<tbody>
-                		  		<tr *ngFor="let maq of maquinaria$ | paginate:{itemsPerPage: 8, currentPage:p}">
+                		  		<tr *ngFor="let maq of Maq$.data | paginate:{itemsPerPage: 8, currentPage:p}">
                 		    		<th style="text-align: center;" scope="row">Maq_{{maq.idMaq}}</th>
                 		    		<td>{{maq.identificacion}}</td>
                 		    		<td>{{maq.tipo}}</td>
-                		    		<td>{{maq.modelo}}</td>
+                		    		<td>{{maq.marca}}, {{maq.modelo}}</td>
                 		    		<td>
-                		      			<a (click)="gotoDetails(prov.idProv)" class="btn btn-info" style="color:white;">Detalles</a>
+                		      			<a (click)="gotoDetails(maq.idMaq)" class="btn btn-info" style="color:white;">Detalles</a>
                 		    		</td>
                 		  		</tr>
                 			</tbody>

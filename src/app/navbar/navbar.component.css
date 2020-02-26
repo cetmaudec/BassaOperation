@@ -30,7 +30,7 @@ img{
 nav {
   margin: -50px auto 0;
   position: relative;
-  width: 870px;
+  width: 690px;
   height: auto;
   background-color: #234985;
   border-radius: 8px;
@@ -73,16 +73,16 @@ a:nth-child(3) {
     width: 180px;
   position: center;
 }
-a:nth-child(4) {
+/*a:nth-child(4) {
     width: 180px;
   position: center;
-}
-a:nth-child(5) {
+}*/
+a:nth-child(4) {
     width: 110px;
   position: center;
 }
 
-a:nth-child(6) {
+a:nth-child(5) {
   width: 180px;
   position: center;
 }
@@ -104,22 +104,22 @@ nav .start-ot, a:nth-child(3):hover~.animation {
   background-color: #189ad3;
   color: white;
 }
-nav .start-proveedor, a:nth-child(4):hover~.animation {
+/*nav .start-proveedor, a:nth-child(4):hover~.animation {
   width: 180px;
   left: 400px;
   background-color: #189ad3;
   color: white;
-}
-nav .start-maquinaria, a:nth-child(5):hover~.animation {
+}*/
+nav .start-maquinaria, a:nth-child(4):hover~.animation {
   width: 110px;
-  left: 580px;
+  left: 400px;
   background-color: #189ad3;
   color: white;
 }
 
-nav .start-estadistico, a:nth-child(6):hover~.animation {
+nav .start-estadistico, a:nth-child(5):hover~.animation {
   width: 180px;
-  left: 690px;
+  left: 510px;
   background-color: #189ad3;
   color: white;
 }

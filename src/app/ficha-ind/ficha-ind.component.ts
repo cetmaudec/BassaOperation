@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router, RouterModule } from '@angular/router';
 import * as pdfmake from 'pdfmake/build/pdfmake';
+
+import { FormBuilder, FormArray, FormGroup, Validators, FormControl } from '@angular/forms';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import Swal from'sweetalert2'
 
@@ -20,8 +22,7 @@ export class FichaIndComponent implements OnInit {
 	idOT: any;
 	dataOT$: any = [];
 	dataOTMaq$: any = [];
-
-	ActividadeOT$: any = [];
+	Maq$: any = [];
 
 	doc: any;
 	dato = {
@@ -31,15 +32,27 @@ export class FichaIndComponent implements OnInit {
   	dataOrden: any = [];
   	dataActividad: any = [];
   	codtable:any = [];
-
   	cont: any;
 
-  	constructor(private activatedRoute: ActivatedRoute, private router: Router, private http:HttpClient) {
+  	MaqAddform: FormGroup;
+  	addmaq: Boolean= false;
+  	dataMaqAdd = {
+   		OT:'',
+   		maquina:'',
+   		tiempo:''
+   	}
+
+  	constructor(private activatedRoute: ActivatedRoute,private formBuilder: FormBuilder, private router: Router, private http:HttpClient) {
   		this.idOT = this.activatedRoute.snapshot.paramMap.get('id');
   	}
 
   	async ngOnInit() {
+  		this.MaqAddform = this.formBuilder.group({
+    	  maquina:['',Validators.required],
+    	  tiempo:['',Validators.required]
+    	});
   		this.cont = await this.getData();
+  		this.Maq$ = await this.getMaquina();
   	}
 
   	async getData(){
@@ -56,6 +69,16 @@ export class FichaIndComponent implements OnInit {
   		);
       	return true;
   	}
+
+  	async getMaquina(){
+  		this.http.get('http://localhost:426/maquina/select').subscribe(
+  			(resp) => {
+  				this.Maq$ = resp as []
+  			}
+  		);
+  		return this.Maq$;
+  	}
+
 
   	Finalizado(){
   		this.dato= {
@@ -78,9 +101,6 @@ export class FichaIndComponent implements OnInit {
 		);	
   	}
 
-  	gotoDetailsAct(idRelacion: any) {
-    	this.router.navigate(['/actividad-detalle/', idRelacion]);
-  	}
 
   	Estado(idRelacion: any, estadoAct: any) {
   		this.dato= {
@@ -96,11 +116,36 @@ export class FichaIndComponent implements OnInit {
   	}
 
   	AddMaq(){
-  		Swal.fire({
-  				icon: 'success',
-  				title: 'El trabajo ha sido entregado y finalizado!',
-  				confirmButtonText: 'Ok!'
-  				})  	
+  		this.addmaq = true;
+  	}
+
+  	onSubmitAddMaq(){
+
+  		this.dataMaqAdd = {
+  			'OT': this.idOT,
+  			'maquina': this.MaqAddform.get('maquina').value,
+  			'tiempo':this.MaqAddform.get('tiempo').value,
+      	};
+   
+       this.http.post('http://localhost:426/maquina/ot/insert', this.dataMaqAdd, {responseType: 'text'}).subscribe(
+      response =>  Swal.fire({
+                icon: 'success',
+                title: 'Maquinaria Utilizada!',
+                text: 'Se ha agregado el uso de maquina a la OT.',
+                confirmButtonText: 'Ok!'
+                }).then((result) => {
+                  if (result.value) {
+                  	this.addmaq = false;
+                    this.ngOnInit();
+                  }
+                }) ,
+        err => Swal.fire({
+              icon: 'error',
+              title: 'Oops!',
+              text: 'Ha ocurrido un error, vuelva a intentarlo'
+          })
+    );
+
   	}
 
   	generateReport(){
