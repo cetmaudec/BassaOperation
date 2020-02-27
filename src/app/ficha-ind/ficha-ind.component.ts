@@ -87,7 +87,7 @@ export class FichaIndComponent implements OnInit {
   		this.http.put('http://localhost:426/orden-trabajo/estado/update/'+this.idOT, this.dato, {responseType: 'text'}).subscribe(
   			response =>  Swal.fire({
   				icon: 'success',
-  				title: 'El trabajo ha sido entregado y finalizado!',
+  				title: 'El trabajo ha sido finalizado!',
   				confirmButtonText: 'Ok!'
   				}).then((result) => {
   					if (result.value) {
@@ -102,17 +102,16 @@ export class FichaIndComponent implements OnInit {
   	}
 
 
-  	Estado(idRelacion: any, estadoAct: any) {
+  	Estado(estadoAct: any) {
   		this.dato= {
   			'estado': estadoAct
   		};
-  		this.http.put('http://localhost:426/estado-actividad/'+idRelacion, this.dato, {responseType: 'text'}).subscribe(
+  		this.http.put('http://localhost:426/orden-trabajo/estado/update/'+this.idOT, this.dato, {responseType: 'text'}).subscribe(
   			(response) => {
-  				console.log('response from post data is ', response);
+  				this.ngOnInit();
   			},(error)=>{
   				console.log('error during post is ', error)
   			});
-  		this.ngOnInit();
   	}
 
   	AddMaq(){
@@ -136,6 +135,7 @@ export class FichaIndComponent implements OnInit {
                 }).then((result) => {
                   if (result.value) {
                   	this.addmaq = false;
+                  	this.Estado('En ejecución');
                     this.ngOnInit();
                   }
                 }) ,

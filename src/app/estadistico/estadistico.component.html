@@ -1,1 +1,130 @@
-<p>estadistico works!</p>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Dashboard General</title>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
+  <script src="../assets/vendor/chart.js/Chart.min.js"></script>
+</head>
+
+<body>
+  <div class="page">
+    <app-navbar></app-navbar>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div class="content">
+          <section class="section section-container" style="padding-bottom: 15px;">
+            <div class="row">   
+              <div class="col">
+                <div class="box">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Trabajo más demandado</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{tipoTrabajoLabel[0]}}</div>
+                        </div>
+                        <div class="col-auto">
+                          <img  src="../assets/icons/svg/tools_c.svg"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="box">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Máquina más utilizada</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{tipoMaquinaLabel[0]}}</div>
+                        </div>
+                        <div class="col-auto">
+                          <img  src="../assets/icons/svg/work_c.svg "  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="box">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Mes de máxima demanda</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{MesMaxDemanda}}</div>
+                        </div>
+                        <div class="col-auto">
+                          <img  src="../assets/icons/svg/analytic.svg"  width="72" class="d-inline-block align-center" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 2%;">
+              <div class="col-8">
+                <div class="box">
+                  <div class="card shadow mb-8">
+                    <div class="card-header py-4">
+                      <h6 class="m-0 font-weight-bold text-primary">Flujo de demanda por tipo de trabajo</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-area">
+                        <canvas id="FlowChart"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4" style="margin-top: 1%;">
+                <div class="box">
+                  <div class="card shadow mb-2">
+                    <div class="card-header py-2">
+                      <h6 class="m-0 font-weight-bold text-primary">Estado de trabajos</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-area">
+                        <canvas id="ChartEstado"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 2%;">
+              <div class="col-8">
+                <div class="box">
+                  <div class="card shadow mb-8">
+                    <div class="card-header py-4">
+                      <h6 class="m-0 font-weight-bold text-primary">Uso de maquinaria</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="chart-area">
+                        <canvas id="LineChartMaquin"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>

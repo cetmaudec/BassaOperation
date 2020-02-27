@@ -358,7 +358,20 @@ app.get('/orden-trabajo/join/cliente/orderby/desc' , (req, res, next) => {
         }
     })
 })
-/*
+
+app.get('/orden-trabajo/estado/groupby', (req, res, next) => {
+  con.query('SELECT COUNT(*) as cantidad, estado FROM orden_trabajo GROUP BY(estado) ORDER BY(cantidad) DESC;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+
 app.put('/orden-trabajo/estado/update/:id', bodyParser.json(), (req, res, next) => {
     const UPDATE_COSTO = `UPDATE orden_trabajo SET  orden_trabajo.estado = '${req.body.estado}'  WHERE orden_trabajo.idOT=${req.params.id} `
     con.query(UPDATE_COSTO, (err, resultados) => {
@@ -369,8 +382,6 @@ app.put('/orden-trabajo/estado/update/:id', bodyParser.json(), (req, res, next) 
         }
     })
 });
-
-*/
 
 
 /*
@@ -525,7 +536,88 @@ app.post('/maquina/ot/insert', bodyParser.json(), (req, res, next) => {
 })
 
 
+/*
+DEMANDA
+*/
+
+app.get('/pivot-tipo-mes' , (req, res, next) => {
+  con.query(`SELECT tipo, 
+            COUNT(IF(MONTH(fecha_llegada) = 1, 1, NULL)) AS Enero,
+            COUNT(IF(MONTH(fecha_llegada) = 2, 1, NULL)) AS Febrero,
+            COUNT(IF(MONTH(fecha_llegada) = 3, 1, NULL)) AS Marzo,
+            COUNT(IF(MONTH(fecha_llegada) = 4, 1, NULL)) AS Abril,
+            COUNT(IF(MONTH(fecha_llegada) = 5, 1, NULL)) AS Mayo,
+            COUNT(IF(MONTH(fecha_llegada) = 6, 1, NULL)) AS Junio,
+            COUNT(IF(MONTH(fecha_llegada) = 7, 1, NULL)) AS Julio,
+            COUNT(IF(MONTH(fecha_llegada) = 8, 1, NULL)) AS Agosto,
+            COUNT(IF(MONTH(fecha_llegada) = 9, 1, NULL)) AS Septiembre,
+            COUNT(IF(MONTH(fecha_llegada) = 10, 1, NULL)) AS Octubre,
+            COUNT(IF(MONTH(fecha_llegada) = 11, 1, NULL)) AS Noviembre,
+            COUNT(IF(MONTH(fecha_llegada) = 12, 1, NULL)) AS Diciembre
+            FROM orden_trabajo 
+            WHERE YEAR(fecha_llegada) = YEAR(CURDATE()) 
+            GROUP BY tipo;`, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.get('/demanda/count', (req, res, next) => {
+  con.query('SELECT COUNT(*) as cantidad, MONTH(fecha_llegada) as mes FROM orden_trabajo WHERE YEAR(fecha_llegada) = YEAR(CURDATE())-1 OR YEAR(fecha_llegada) = YEAR(CURDATE()) GROUP BY(MONTH(fecha_llegada)) ORDER BY(cantidad) DESC;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.get('/tipo/trabajo/count', (req, res, next) => {
+  con.query('SELECT COUNT(*) as cantidad, tipo FROM orden_trabajo GROUP BY(tipo) ORDER BY(cantidad) DESC;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.get('/tipo/maquina/count', (req, res, next) => {
+  con.query('SELECT COUNT(*) as cantidad, tipo FROM OT_Maq, maquina WHERE idMaq=maquina GROUP BY(tipo) ORDER BY(cantidad) DESC;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+app.get('/identificacion/maquina/count', (req, res, next) => {
+  con.query('SELECT COUNT(*) as cantidad, AVG(tiempo_uso) as prom, identificacion FROM OT_Maq, maquina WHERE idMaq=maquina GROUP BY(identificacion) ORDER BY(cantidad) DESC;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+
+
 
 app.listen(426, () => {
-    console.log('el servidor está usando el puerto 426 -')
+    console.log('el servidor está usando el puerto 426')
 })
