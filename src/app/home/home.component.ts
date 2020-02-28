@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import { Chart } from 'chart.js';
 import { ActivatedRoute } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import 'chartjs-plugin-colorschemes';
 
 @Component({
@@ -13,27 +14,115 @@ import 'chartjs-plugin-colorschemes';
 export class HomeComponent implements OnInit {
 
 	User:any;
-	ordenTrabajoAct$ = [{ordenTrabajo: 'OT01', estadoOT: 'En ejecución', nombre: 'AA', apellido_p: 'PP', apellido_m: 'MM' , iniciada:0, finalizada:0, app:10, na: 5},
-	{ordenTrabajo: 'OT02', estadoOT: 'En ejecución', nombre: 'NN1', apellido_p: 'PP1', apellido_m: 'MM1' , iniciada:1, finalizada:9, app:5, na: 5},
-	{ordenTrabajo: 'OT03', estadoOT: 'En ejecución', nombre: 'NN2', apellido_p: 'PP2', apellido_m: 'MM2' , iniciada:0, finalizada:4, app:2, na: 5},
-	{ordenTrabajo: 'OT04', estadoOT: 'Finalizada', nombre: 'NN3', apellido_p: 'PP3', apellido_m: 'MM3' , iniciada:0, finalizada:10, app:0, na: 4}];
-	otPorc: any = [];
 
-	constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) {
+    TipoChart1Group$:any = [];
+    OT$:any = [];
+    PivotData: any[] = [];
+
+	constructor(private http: HttpClient, private activatedRoute: ActivatedRoute, private router: Router) {
 		this.User = localStorage.getItem('user');
 	}
 
-	ngOnInit() {
-		this.getActOT();
+	async ngOnInit() {
+		
+        this.TipoChart1Group$ = await this.getDataPivotMes();
+        this.createChartFlujo();
+        this.OT$ = await this.getOT()
 	}
 
-	getActOT(){
-		for(const ot of this.ordenTrabajoAct$){
-			if(ot.finalizada == 0){
-				this.otPorc.push({'orden': ot.ordenTrabajo, 'porcentaje': 0});
-			}else{
-				this.otPorc.push({'orden': ot.ordenTrabajo, 'porcentaje': (ot.finalizada*100 / (ot.finalizada + ot.iniciada + ot.app)).toPrecision(3)});
-			}
-		}
-	}
+	async getDataPivotMes(){
+    	this.TipoChart1Group$ = await this.http.get('http://localhost:426/pivot/costo/mes').toPromise();
+    	return this.TipoChart1Group$;
+  	}
+
+    async getOT(){
+        this.OT$ = await this.http.get('http://localhost:426/orden-trabajo/cliente/join').toPromise();
+        return this.OT$;
+    }
+
+	createChartFlujo(){
+    	for(let pivot of this.TipoChart1Group$.data){
+            if(pivot.Enero == null ){
+                pivot.Enero = 0;
+            }
+            if(pivot.Febrero == null ){
+                pivot.Febrero = 0;
+            }
+            if(pivot.Marzo == null ){
+                pivot.Marzo = 0;
+            }
+            if(pivot.Abril == null ){
+                pivot.Abril = 0;
+            }
+            if(pivot.Mayo == null ){
+                pivot.Mayo = 0;
+            }
+            if(pivot.Junio == null ){
+                pivot.Junio = 0;
+            }
+            if(pivot.Julio == null ){
+                pivot.Julio = 0;
+            }
+            if(pivot.Agosto == null) {
+                pivot.Agosto = 0;
+            }
+            if(pivot.Septiembre == null ){
+                pivot.Septiembre = 0;
+            }
+            if(pivot.Octubre == null ){
+                pivot.Octubre = 0;
+            }
+            if(pivot.Noviembre == null ){
+                pivot.Noviembre = 0;
+            }
+            if(pivot.Diciembre == null ){
+                pivot.Diciembre = 0;
+            }
+      		this.PivotData.push({
+        		label: pivot.tipo,
+        		data: [pivot.Enero, pivot.Febrero, pivot.Marzo, pivot.Abril, pivot.Mayo, pivot.Junio, pivot.Julio, pivot.Agosto, pivot.Septiembre, pivot.Octubre, pivot.Noviembre, pivot.Diciembre]
+      		})
+    	}
+    	var ctx = document.getElementById("FlowChart");
+    	var myLineChart = new Chart(ctx, {
+    	  type: 'line',
+    	  data: {
+    	    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    	    datasets: this.PivotData
+    	  },
+    	  options: {
+    	    scales: {
+    	      yAxes: {
+    	        type: 'linear',
+    	        ticks: {
+    	          min: 0
+    	        }
+    	      }
+    	    },
+    	    maintainAspectRatio: false,
+    	    plugins: {
+    	      colorschemes: {
+    	        scheme: 'office.Kilter6'
+    	      }
+    	    },
+    	    layout: {
+    	      padding: {
+    	        left: 10,
+    	        right: 25,
+    	        top: 25,
+    	        bottom: 0
+    	      }
+    	    },
+    	    legend: {
+    	      display: true,
+    	      position: 'bottom',
+    	      align: 'center'
+    	    },
+    	  }
+    	});
+  	}
+
+    gotoDetails(ordenTrabajoId: any) {
+        this.router.navigate(['/ordentrabajo/', ordenTrabajoId]);
+    }
 }

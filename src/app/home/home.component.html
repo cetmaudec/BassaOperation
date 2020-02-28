@@ -16,41 +16,65 @@
 <body>
   <div class="page">
     <app-navbar></app-navbar>
+    <div class="row" style="margin-top: 2%;">
+      <div class="col"></div>
+      <div class="col-8">
+        <div class="box">
+          <div class="card shadow mb-8">
+            <div class="card-header py-4">
+              <h6 class="m-0 font-weight-bold text-primary">Flujo de demanda por tipo de trabajo</h6>
+            </div>
+            <div class="card-body">
+              <div class="chart-area">
+                <canvas id="FlowChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
 
     <div class="row" style="margin-bottom: 80px;">
       <div class="col"></div>
-      <div class="col-8" style="padding-left:5%; padding-top:2.5%;">
+      <div class="col-8" style="padding-top:2.5%;">
         <div class="card">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Ordenes de trabajo:</h6>
             </div>
-            <div class="card-body" *ngFor="let ot of ordenTrabajoAct$; let i=index">
-              <h4 class="small font-weight-bold">OT{{ot.ordenTrabajo}}: {{ot.nombre}} {{ot.apellido_p}} {{ot.apellido_m}}
-                <span class="float-right">{{otPorc[i].porcentaje}}%</span>
+            <div class="card-body">
+              <h4 class="small font-weight-bold">
+                <span class="float-right"></span>
               </h4>
-              <div class="progress">
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >0" role="progressbar" style="width:1%; background-color:#da4f4a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >5" role="progressbar" style="width:5%; background-color:#da4f4a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >10" role="progressbar" style="width:5%; background-color:#e66f4b;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >15" role="progressbar" style="width:5%; background-color:#e66f4b;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >20" role="progressbar" style="width:5%; background-color:#f08e52;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >25" role="progressbar" style="width:5%; background-color:#f08e52;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >30" role="progressbar" style="width:5%; background-color:#f6ac5e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >35" role="progressbar" style="width:5%; background-color:#f6ac5e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >40" role="progressbar" style="width:5%; background-color:#fbc971;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >45" role="progressbar" style="width:5%; background-color:#fbc971;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >50" role="progressbar" style="width:5%; background-color:#ffe68a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >55" role="progressbar" style="width:5%; background-color:#e2dd7a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >60" role="progressbar" style="width:5%; background-color:#e2dd7a;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >65" role="progressbar" style="width:5%; background-color:#c4d46d;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >70" role="progressbar" style="width:5%; background-color:#c4d46d;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >75" role="progressbar" style="width:5%; background-color:#a4cb64;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >80" role="progressbar" style="width:5%; background-color:#a4cb64;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >85" role="progressbar" style="width:5%; background-color:#82c15e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >90" role="progressbar" style="width:5%; background-color:#82c15e;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >95" role="progressbar" style="width:5%; background-color:#5ab75c;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
-                <div class="progress-bar" *ngIf="otPorc[i].porcentaje >98" role="progressbar" style="width:4%; background-color:#5ab75c;" aria-valuenow="20" aria-valuemin="0"  aria-valuemax="100"></div>
+              <div class="row" style="margin-top: 2%;">
+                <div class="col-4" *ngFor="let ot of OT$.data; let i=index" style="margin-top: 1%;">
+                  <div class="box">
+                    <div class="card shadow mb-2">
+                      <div class="card-header py-2">
+                        <h6 class="m-0 font-weight-bold text-primary">OT{{ot.idOT}} {{ot.nombre_empresa}}</h6>
+                      </div>
+                      <div class="card-body">
+                        <div class="chart-area">
+                          <div class="row">
+                            <div class="col-4">
+                              <img  *ngIf="ot.estado == 'No iniciado'" src="../assets/img/sem_rojo.png"  width="100" class="d-inline-block align-center" alt="">
+                              <img  *ngIf="ot.estado == 'En ejecución'" src="../assets/img/sem_amarillo.png"  width="100" class="d-inline-block align-center" alt="">
+                              <img  *ngIf="ot.estado == 'Finalizado'" src="../assets/img/sem_verde.png"  width="100" class="d-inline-block align-center" alt="">
+                            </div>
+                            <div class="col-8">
+                              <h3><b>{{ot.estado}}</b></h3>
+                              <h6><b>Representante:</b><br>{{ot.nombre_rep}} {{ot.apellidoP_rep}} {{apellidoM_rep}}</h6>
+                              <h6><b>Descripción:</b><br>{{ot.descripcion}}</h6>
+                              <h6><b>Tipo:</b> {{ot.tipo}}</h6>
+                              <h6><a (click)="gotoDetails(ot.idOT)" class="btn btn-info" style="color:white;">Detalles</a></h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

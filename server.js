@@ -307,12 +307,23 @@ app.get('/orden-trabajo', (req, res) => {
     })
 })
 
+
+app.get('/orden-trabajo/cliente/join', (req, res) => {
+  con.query('SELECT * FROM orden_trabajo, cliente WHERE cliente.idCliente = orden_trabajo.cliente;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+}) 
+
 app.post('/orden-trabajo/insert', bodyParser.json(), (req, res, next) => {
     con.query(`INSERT INTO orden_trabajo (cliente,tipo, descripcion, fecha_llegada,forma_pago,monto_cobrado,pagado,estado)
         VALUES (${req.body.nombreCliente},'${req.body.tipo}','${req.body.descripcion}','${req.body.fecha_ingreso}', '${req.body.forma_pago}', ${req.body.monto_cobrado},'${req.body.pagado}','${req.body.estado}');`, (err, resultados) => {
-            console.log(req);
             if(err) {
-                console.log(err);
                 return res.send(err)
 
             } else {
@@ -567,6 +578,33 @@ app.get('/pivot-tipo-mes' , (req, res, next) => {
     })
 })
 
+app.get('/pivot/costo/mes' , (req, res, next) => {
+  con.query(`SELECT tipo, 
+            SUM(IF(MONTH(fecha_llegada) = 1, monto_cobrado, NULL)) AS Enero,
+            SUM(IF(MONTH(fecha_llegada) = 2, monto_cobrado, NULL)) AS Febrero,
+            SUM(IF(MONTH(fecha_llegada) = 3, monto_cobrado, NULL)) AS Marzo,
+            SUM(IF(MONTH(fecha_llegada) = 4, monto_cobrado, NULL)) AS Abril,
+            SUM(IF(MONTH(fecha_llegada) = 5, monto_cobrado, NULL)) AS Mayo,
+            SUM(IF(MONTH(fecha_llegada) = 6, monto_cobrado, NULL)) AS Junio,
+            SUM(IF(MONTH(fecha_llegada) = 7, monto_cobrado, NULL)) AS Julio,
+            SUM(IF(MONTH(fecha_llegada) = 8, monto_cobrado, NULL)) AS Agosto,
+            SUM(IF(MONTH(fecha_llegada) = 9, monto_cobrado, NULL)) AS Septiembre,
+            SUM(IF(MONTH(fecha_llegada) = 10, monto_cobrado, NULL)) AS Octubre,
+            SUM(IF(MONTH(fecha_llegada) = 11, monto_cobrado, NULL)) AS Noviembre,
+            SUM(IF(MONTH(fecha_llegada) = 12, monto_cobrado, NULL)) AS Diciembre
+            FROM orden_trabajo 
+            WHERE YEAR(fecha_llegada) = YEAR(CURDATE()) 
+            GROUP BY tipo;`, (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
 app.get('/demanda/count', (req, res, next) => {
   con.query('SELECT COUNT(*) as cantidad, MONTH(fecha_llegada) as mes FROM orden_trabajo WHERE YEAR(fecha_llegada) = YEAR(CURDATE())-1 OR YEAR(fecha_llegada) = YEAR(CURDATE()) GROUP BY(MONTH(fecha_llegada)) ORDER BY(cantidad) DESC;', (err, resultados) => {
         if(err) {
@@ -614,8 +652,6 @@ app.get('/identificacion/maquina/count', (req, res, next) => {
         }
     })
 })
-
-
 
 
 app.listen(426, () => {

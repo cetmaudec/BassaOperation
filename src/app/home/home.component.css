@@ -1,68 +1,94 @@
+body, html {
+    height: 100%;
+}
 
 .page{
-  background-image: url("src/assets/img/bg3.jpg");
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  background-repeat: repeat;
-  background-size: cover;
+    background-image: url("src/assets/img/bg3.jpg");
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-repeat: repeat;
+    background-size: cover;
 }
 
-.content{
-  padding-top: 3%;
-  width: 65%;
-  left:20%;
-  position: relative;
+.chart-area {
+    min-height: 20rem;
+    height: 100%;
+    position: relative;
+    width: auto;
 }
+
 
 section{
   position: center;
 }
 
+img{
+  vertical-align: middle;
+  display: flex;
+  align-self: center;
+}
+
+.content{
+  padding-top: 3%;
+  position: relative;
+  left:auto;
+  width: 65%;
+  display: grid;
+  align-self: center;
+}
+
 .box{
-    border: 1px solid #34495e !important;
-    background-color: #f8f9f9;
+  width: auto;
 }
 
 h1{
-    color: #4C4C4E;
-    text-decoration: bold;
-    font-family: Monaco;
-    text-align: center;
-    font-weight: bold;
+  color: #4C4C4E;
+  text-decoration: bold;
+  font-family: Monaco;
+  text-align: center;
+  font-weight: bold;
 }
 
-
 h2{
-    color: #4C4C4E;
-    text-decoration: bold;
-    font-family: Monaco;
-    text-align: center;
-    font-weight: bold;
+  color: #4C4C4E;
+  text-decoration: bold;
+  font-family: Monaco;
+  text-align: center;
+  font-weight: bold;
 }
 
 label{
-    color: #d96421;
-    font-family: Monaco;
+  color: #d96421;
+  font-family: Monaco;
+}
+
+table{
+  width: auto !important;
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+}
+
+thead{
+  background-color: #4f667c;
+  color: #f4f4f4;
+  text-align: center;
+  border-radius: 20px
 }
 
 th{
-    font-family: Monaco;
-    text-align: center;
+  background-color: #4f667c;
+  font-family: Monaco;
+  text-align: center;
+  color: #f4f4f4;
 }
 
 td{
-    font-family: Monaco;
-    text-align: center;
-}
-
-footer {
-  background-color: rgba(242, 243, 244, 0.75);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: auto;
-  color: white;
+  font-family: Monaco;
+  text-align: center;
 }
