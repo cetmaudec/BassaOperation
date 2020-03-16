@@ -17,9 +17,11 @@ export class OrdenTrabajoComponent implements OnInit {
   OTform: FormGroup;
   Clienteform: FormGroup;
 
-  estadoCliente = false
+  estadoCliente = false;
+  ID_new: any;
 
   cliente$: any = [];
+  clienteCount$: any = []; 
   tipo$: any = [];
   LastOT$: any = [];
   pagado_inicio:any = 0;
@@ -78,14 +80,19 @@ export class OrdenTrabajoComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.CleanDatos();
-    this.getClientes();
-    this.getTipos();
+    this.cliente$ = await this.getClientes();
+    this.getTipos();   
   }
 
   AddClient(){
     this.estadoCliente=true;
+    if(this.cliente$.data.length == 0){
+      this.ID_new = 1;
+    }else {
+      this.ID_new = this.cliente$.data[0].idCliente+1;
+    }
   }
 
   CleanDatos(){
@@ -94,11 +101,11 @@ export class OrdenTrabajoComponent implements OnInit {
     this.estadoCliente = false
   }
 
-  getClientes(){
-    this.http.get('http://localhost:426/cliente').subscribe(resp =>
-      this.cliente$ = resp as []
-      );
+  async getClientes(){
+    this.cliente$ = await this.http.get('http://localhost:426/cliente').toPromise();
+    return this.cliente$;
   }
+
 
   getTipos(){
     this.http.get('http://localhost:426/tipo').subscribe(resp =>
@@ -106,12 +113,10 @@ export class OrdenTrabajoComponent implements OnInit {
       );
   }
 
-
-
   SubmitOTCliente(){
     if(this.estadoCliente == true){
       this.dataOT = {
-        'nombreCliente':this.cliente$.data[0].idCliente+1,
+        'nombreCliente': this.ID_new,
         'tipo':this.OTform.get('tipo').value,
         'descripcion':this.OTform.get('descripcion').value,
         'fecha_ingreso':this.OTform.get('fecha_ingreso').value,
@@ -134,7 +139,7 @@ export class OrdenTrabajoComponent implements OnInit {
     }
 
     this.http.post('http://localhost:426/orden-trabajo/insert', this.dataOT, {responseType: 'text'}).subscribe(
-      response =>  Swal.fire({
+        response =>  Swal.fire({
                 icon: 'success',
                 title: 'Nueva orden de trabajo!',
                 text: 'La OT ha sido creada exitosamente.',
@@ -148,9 +153,8 @@ export class OrdenTrabajoComponent implements OnInit {
               icon: 'error',
               title: 'Oops!',
               text: 'Ha ocurrido un error, vuelva a intentarlo'
-          })
-    );
-    this.CleanDatos();      
+      })
+    );    
   }
 
   SubmitCliente(){
@@ -169,16 +173,13 @@ export class OrdenTrabajoComponent implements OnInit {
       'Celular':this.Clienteform.get('Celular').value
     }
 
-
     this.http.post('http://localhost:426/cliente/insert', this.clienteOT, {responseType: 'text'}).subscribe(
       (response) => {
-
-        console.log('response from post data is ', response);
+        this.SubmitOTCliente();
       },
       (error)=>{
         console.log('error during post is ', error);
       }
     );
-    this.SubmitOTCliente();
   }
 }

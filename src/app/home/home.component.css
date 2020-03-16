@@ -20,6 +20,13 @@ body, html {
     width: auto;
 }
 
+.chart-area-OT {
+    min-height: 10rem;
+    height: 100%;
+    position: relative;
+    width: auto;
+
+}
 
 section{
   position: center;
@@ -58,6 +65,14 @@ h2{
   font-family: Monaco;
   text-align: center;
   font-weight: bold;
+}
+h3{
+  text-align: center;
+  color: #5a5c69;
+}
+h6{
+  margin-left: 15%;
+  color: #5a5c69;
 }
 
 label{

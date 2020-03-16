@@ -16,15 +16,16 @@ body, html {
 
 
 footer {
-  background-color: rgba(242, 243, 244, 0.35);
+  background-color: rgba(242, 243, 244, 0.75);
   position: absolute;
   bottom: 0;
   width: 100%;
   height: auto;
   color: white;
-    padding-left:5%;
+  padding-left:5%;
   padding-right:3%;
 }
+
 
 .card {
     background-color: #F7F7F7;

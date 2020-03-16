@@ -208,6 +208,20 @@ app.get('/cliente', (req, res) => {
     })
 })
 
+app.get('/cliente/count', (req, res) => {
+    con.query('SELECT COUNT(*) as cliente FROM cliente;', (err, resultados) => {
+        if(err) {
+            return res.send(err)
+        } else {
+            console.log(resultados)
+            return res.json({
+                data: resultados
+            })
+        }
+    })
+})
+
+
 app.get('/cliente/:id' , (req, res, next) => {
   con.query(`SELECT * FROM cliente WHERE cliente.idCliente = ${req.params.id};`, (err, resultados) => {
         if(err) {

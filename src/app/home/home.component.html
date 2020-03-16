@@ -55,21 +55,22 @@
                         <h6 class="m-0 font-weight-bold text-primary">OT{{ot.idOT}} {{ot.nombre_empresa}}</h6>
                       </div>
                       <div class="card-body">
-                        <div class="chart-area">
+                        <div class="chart-area-OT">
                           <div class="row">
                             <div class="col-4">
-                              <img  *ngIf="ot.estado == 'No iniciado'" src="../assets/img/sem_rojo.png"  width="100" class="d-inline-block align-center" alt="">
-                              <img  *ngIf="ot.estado == 'En ejecución'" src="../assets/img/sem_amarillo.png"  width="100" class="d-inline-block align-center" alt="">
-                              <img  *ngIf="ot.estado == 'Finalizado'" src="../assets/img/sem_verde.png"  width="100" class="d-inline-block align-center" alt="">
+                              <img  *ngIf="ot.estado == 'No iniciado'" src="../assets/img/sem-r.png"  width="100" class="d-inline-block align-center" alt="">
+                              <img  *ngIf="ot.estado == 'En ejecución'" src="../assets/img/sem-a.png"  width="100" class="d-inline-block align-center" alt="">
+                              <img  *ngIf="ot.estado == 'Finalizado'" src="../assets/img/sem-v.png"  width="100" class="d-inline-block align-center" alt="">
                             </div>
                             <div class="col-8">
                               <h3><b>{{ot.estado}}</b></h3>
                               <h6><b>Representante:</b><br>{{ot.nombre_rep}} {{ot.apellidoP_rep}} {{apellidoM_rep}}</h6>
                               <h6><b>Descripción:</b><br>{{ot.descripcion}}</h6>
                               <h6><b>Tipo:</b> {{ot.tipo}}</h6>
-                              <h6><a (click)="gotoDetails(ot.idOT)" class="btn btn-info" style="color:white;">Detalles</a></h6>
                             </div>
                           </div>
+                          <br>
+                          <h6 style="text-align: end;"><a (click)="gotoDetails(ot.idOT)" class="btn btn-info" style="color:white; width: 50%;">Detalles</a></h6>
                         </div>
                       </div>
                     </div>

@@ -23,8 +23,7 @@ export class HomeComponent implements OnInit {
 		this.User = localStorage.getItem('user');
 	}
 
-	async ngOnInit() {
-		
+	async ngOnInit() {		
         this.TipoChart1Group$ = await this.getDataPivotMes();
         this.createChartFlujo();
         this.OT$ = await this.getOT()
